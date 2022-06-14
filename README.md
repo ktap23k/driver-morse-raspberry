@@ -1,5 +1,5 @@
 # driver-morse-raspberry
-
+0. install các thư viện trong requirements.txt -.- chạy từng lệnh vì rasp khó pip
 1. testmorse folder chứa modul driver morse encode, decode, blink led. Install:
    1.1. cd tới thư mục testmorse
    1.2. make
