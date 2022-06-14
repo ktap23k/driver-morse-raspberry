@@ -1,0 +1,1 @@
+cmd_/home/miichi/Desktop/pyqt/testmorse/Module.symvers := sed 's/\.ko$$/\.o/' /home/miichi/Desktop/pyqt/testmorse/modules.order | scripts/mod/modpost -m -a  -o /home/miichi/Desktop/pyqt/testmorse/Module.symvers -e -i Module.symvers   -T -

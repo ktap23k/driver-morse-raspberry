@@ -1,0 +1,1 @@
+cmd_/home/miichi/Desktop/pyqt/testmorse/modules.order := {   echo /home/miichi/Desktop/pyqt/testmorse/morseDecodeEncode.ko; :; } | awk '!x[$$0]++' - > /home/miichi/Desktop/pyqt/testmorse/modules.order
