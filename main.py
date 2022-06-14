@@ -9,9 +9,9 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMessageBox, QMainWindow
 
-
-class Ui_MainWindow(object):
+class Ui_MainWindow(QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(512, 462)
@@ -54,8 +54,86 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        self.bntGet.clicked.connect(self.pushButton)
+        self.bntEn.clicked.connect(self.encodeMorse)
+        self.bntDe.clicked.connect(self.decodeMorse)
+        self.bntBlink.clicked.connect(self.blink)
+
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+    
+    def blink(self):
+        '''blink led flow morse'''
+        if self.validation_de(self.textBlink.text()):
+            self.textEncode.setText(self.textBlink.text())
+            self.decodeMorse()
+            self.encodeMorse()
+        elif self.validation_en(self.textBlink.text()):
+            self.textDecode.setText(self.textBlink.text())
+            self.encodeMorse()
+        else:
+            QMessageBox.about(self, "Error", "Data Error!")
+        
+    
+    def validation_de(self, string):
+        '''Check data is string '''
+        from checkData import Check
+        return Check().checkMorseTrue(string)
+
+    def decodeMorse(self):
+        '''decode data from encode, if encode null decode on getMorse from button'''
+        import morse
+        self.decode_ = 'Error data!'
+        if self.textEncode.text():
+            if self.validation_de(self.textEncode.text()):
+                self.decode_ = morse.decrypt(self.textEncode.text())
+
+        elif self.inputTextButton.text():
+            if self.validation_de(self.inputTextButton.text()):
+                self.decode_ = morse.decrypt(self.inputTextButton.text())
+        self.textDecode.setText(self.decode_)
+        if self.decode_ != 'Error data!':
+            QMessageBox.about(self, "Done", "Done!")
+        else:
+            QMessageBox.about(self, "Error", "Error!")
+
+    def validation_en(self, string):
+        '''Check data is morse '''
+        from checkData import Check
+        return Check().checkStringTrue(string)
+
+    def encodeMorse(self):
+        '''encode data from decode '''
+        import morse
+        self.encode_ = 'Error data!'
+        if self.validation_en(self.textDecode.text()):
+            self.encode_ = morse.encrypt(self.textDecode.text())
+        self.textEncode.setText(self.encode_)
+
+        if self.encode_ != 'Error data!':
+            QMessageBox.about(self, "Done", "Done!")
+        else:
+            QMessageBox.about(self, "Error", "Error!")
+
+    def pushButton(self):
+        ''' Get morse on push button'''
+        QMessageBox.about(self, "Get Morse", "Begin listen button push!")
+        from threading import Thread
+        self.inputTextButton.setText('')
+        self.morse = "Error! Don't get input on button."
+        thread = Thread(name='daemon', target=self.get_push)
+        thread.start()
+        thread.join()
+        self.inputTextButton.setText(self.morse)
+
+        if self.morse != "Error! Don't get input on button.":
+            QMessageBox.about(self, "Done", "Done!")
+        else:
+            QMessageBox.about(self, "Error", "Error!")
+
+    def get_push(self):
+        import pushButtonMorse as p
+        self.morse = p.getMorse()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

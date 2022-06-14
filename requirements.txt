@@ -1,0 +1,2 @@
+#sudo apt-get install python-pyqt5 => install pyqt5 on raspberry
+#sudo apt install python-gpiozero => install gpiozero on raspberry
