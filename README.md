@@ -9,7 +9,7 @@
    1.6. cat /dev/morse (để xem mã morse được driver trả về)
    1.7. echo morse > /dev/morse (để chuyển morse thành chuỗi, example: echo .. .-.. --- ...- . ..- > /dev/morse)
    1.8. cat /dev/morse (để xem mã rõ được trả về)
-2. morse.py : encode, decode morse dùng python
+2. morse.py : encode, decode morse dùng driver  ở trên
 3. pushButtonMorse.py : nhận tín hiệu morse từ button, blink led theo việc button được nhấn
 4. main.py file ui
-5. ps: chưa kết nối 1 2 3 4 lại với nhau :v
+5. ps: đã kết nối lại với nhau, cài đặt trên raspbery và chạy
